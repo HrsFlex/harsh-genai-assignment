@@ -1,0 +1,230 @@
+SQL QUERY EXECUTION RESULTS
+===========================
+
+Query #1:
+SELECT
+ROUND(SUM(total_amount), 2) as total_revenue,
+ROUND(AVG(total_amount), 2) as avg_revenue_per_trip,
+COUNT(*) as total_trips
+FROM trips;
+--------------------
+   total_revenue  avg_revenue_per_trip  total_trips
+0      813689.66                 16.73        48629
+
+==================================================
+
+Query #2:
+SELECT
+pickup_hour,
+COUNT(*) as trip_count,
+ROUND(AVG(trip_distance), 2) as avg_distance,
+ROUND(SUM(total_amount), 2) as hourly_revenue
+FROM trips
+GROUP BY pickup_hour
+ORDER BY pickup_hour;
+--------------------
+    pickup_hour  trip_count  avg_distance  hourly_revenue
+0             0       11757          2.95       177697.23
+1             1        8347          3.14       122251.31
+2             2        6462          3.19        95786.63
+3             3        5275          3.48        82821.11
+4             4        3920          4.44        73620.65
+5             5        2300          6.40        57659.36
+6             6        3154          6.10        74886.93
+7             7        2608          5.16        53638.26
+8             9         858          2.41        12798.69
+9            11        3057          2.58        48596.96
+10           12         888          2.55        13891.43
+11           20           2          2.58           24.80
+12           21           1          4.31           16.30
+
+==================================================
+
+Query #3:
+SELECT
+pickup_day,
+COUNT(*) as trips,
+ROUND(SUM(total_amount), 2) as daily_revenue,
+ROUND(AVG(fare_amount), 2) as avg_fare
+FROM trips
+GROUP BY pickup_day
+ORDER BY pickup_day;
+--------------------
+   pickup_day  trips  daily_revenue  avg_fare
+0           1   9552      145120.76     12.36
+1           2  34256      592881.70     14.11
+2           3      3          41.10     12.00
+3           4     15         359.02     19.23
+4          29   4803       75287.08     12.80
+
+==================================================
+
+Query #4:
+SELECT
+ROUND(pickup_latitude, 2) as zone_lat,
+ROUND(pickup_longitude, 2) as zone_lon,
+COUNT(*) as trip_count,
+ROUND(SUM(total_amount), 2) as zone_revenue
+FROM trips
+WHERE pickup_latitude BETWEEN 40.6 AND 40.85
+AND pickup_longitude BETWEEN -74.05 AND -73.75
+GROUP BY 1, 2
+ORDER BY trip_count DESC
+LIMIT 10;
+--------------------
+   zone_lat  zone_lon  trip_count  zone_revenue
+0     40.76    -73.99        3376      56798.83
+1     40.75    -73.99        2995      46073.09
+2     40.73    -73.99        2902      42570.98
+3     40.72    -73.99        2652      40280.17
+4     40.73    -74.00        2402      37764.90
+5     40.76    -73.97        1929      29788.24
+6     40.74    -74.00        1898      27998.30
+7     40.76    -73.98        1894      34958.47
+8     40.75    -73.98        1891      29740.94
+9     40.74    -73.99        1652      25260.45
+
+==================================================
+
+Query #5:
+SELECT
+pickup_weekday,
+COUNT(*) as trips,
+ROUND(AVG(total_amount), 2) as avg_fare,
+ROUND(AVG(trip_distance), 2) as avg_distance
+FROM trips
+GROUP BY pickup_weekday
+ORDER BY
+CASE pickup_weekday
+WHEN 'Monday' THEN 1
+WHEN 'Tuesday' THEN 2
+WHEN 'Wednesday' THEN 3
+WHEN 'Thursday' THEN 4
+WHEN 'Friday' THEN 5
+WHEN 'Saturday' THEN 6
+WHEN 'Sunday' THEN 7
+END;
+--------------------
+  pickup_weekday  trips  avg_fare  avg_distance
+0         Monday     15     23.93          5.94
+1         Friday  14355     15.35          2.79
+2       Saturday  34256     17.31          4.00
+3         Sunday      3     13.70          3.16
+
+==================================================
+
+Query #6:
+SELECT
+CASE
+WHEN trip_distance < 1 THEN '0-1 mi'
+WHEN trip_distance < 3 THEN '1-3 mi'
+WHEN trip_distance < 5 THEN '3-5 mi'
+WHEN trip_distance < 10 THEN '5-10 mi'
+ELSE '10+ mi'
+END as distance_bucket,
+COUNT(*) as trips,
+ROUND(AVG(fare_amount), 2) as avg_fare
+FROM trips
+GROUP BY 1
+ORDER BY
+CASE
+WHEN distance_bucket = '0-1 mi' THEN 1
+WHEN distance_bucket = '1-3 mi' THEN 2
+WHEN distance_bucket = '3-5 mi' THEN 3
+WHEN distance_bucket = '5-10 mi' THEN 4
+ELSE 5
+END;
+--------------------
+  distance_bucket  trips  avg_fare
+0          0-1 mi   9360      5.12
+1          1-3 mi  21021      8.70
+2          3-5 mi   7867     14.58
+3         5-10 mi   6608     22.48
+4          10+ mi   3773     44.81
+
+==================================================
+
+Query #7:
+SELECT
+CASE
+WHEN pickup_hour BETWEEN 6 AND 11 THEN 'Morning'
+WHEN pickup_hour BETWEEN 12 AND 16 THEN 'Afternoon'
+WHEN pickup_hour BETWEEN 17 AND 20 THEN 'Evening'
+ELSE 'Night'
+END as time_period,
+COUNT(*) as trips,
+ROUND(SUM(total_amount), 2) as revenue,
+ROUND(AVG(tip_amount), 2) as avg_tip
+FROM trips
+GROUP BY 1
+ORDER BY revenue DESC;
+--------------------
+  time_period  trips    revenue  avg_tip
+0       Night  38062  609852.59     1.50
+1     Morning   9677  189920.84     2.02
+2   Afternoon    888   13891.43     1.69
+3     Evening      2      24.80     0.60
+
+==================================================
+
+Query #8:
+SELECT
+passenger_count,
+COUNT(*) as trips,
+ROUND(AVG(total_amount), 2) as avg_fare,
+ROUND(AVG(trip_distance), 2) as avg_distance
+FROM trips
+WHERE passenger_count > 0 AND passenger_count <= 6
+GROUP BY passenger_count
+ORDER BY passenger_count;
+--------------------
+   passenger_count  trips  avg_fare  avg_distance
+0                1  32114     16.33          3.54
+1                2   8026     17.93          3.94
+2                3   2493     17.55          3.82
+3                4   1351     17.02          3.66
+4                5   2927     16.78          3.68
+5                6   1718     17.11          3.83
+
+==================================================
+
+Query #9:
+SELECT
+pickup_day,
+ROUND(SUM(total_amount), 2) as daily_revenue
+FROM trips
+GROUP BY pickup_day
+ORDER BY daily_revenue DESC
+LIMIT 10;
+--------------------
+   pickup_day  daily_revenue
+0           2      592881.70
+1           1      145120.76
+2          29       75287.08
+3           4         359.02
+4           3          41.10
+
+==================================================
+
+Query #10:
+WITH monthly_stats AS (
+SELECT
+pickup_month,
+SUM(total_amount) as monthly_revenue
+FROM trips
+GROUP BY pickup_month
+)
+SELECT
+pickup_month,
+ROUND(monthly_revenue, 2) as revenue,
+ROUND(LAG(monthly_revenue) OVER (ORDER BY pickup_month), 2) as prev_month_revenue,
+ROUND(
+(monthly_revenue - LAG(monthly_revenue) OVER (ORDER BY pickup_month))
+/ LAG(monthly_revenue) OVER (ORDER BY pickup_month) * 100,
+2) as growth_percentage
+FROM monthly_stats;
+--------------------
+   pickup_month    revenue prev_month_revenue growth_percentage
+0             1  813689.66               None              None
+
+==================================================

@@ -1,0 +1,12 @@
+pandas
+numpy
+streamlit
+plotly
+matplotlib
+seaborn
+pydeck
+openai
+google-generativeai
+pyspark
+python-dotenv
+groq

@@ -1,0 +1,20 @@
+CORE KPI REPORT
+===============
+
+1. Total Revenue: $813,689.66
+   Monthly Revenue:
+   - Month 1: $813,689.66
+
+2. Average Trip Distance: 3.64 miles
+
+3. Average Fare per Trip: $13.64
+
+4. Tip Percentage (of Fare): 11.80%
+
+5. Peak Demand: Hour 0 with 11757 trips
+
+6. Revenue per Mile: $4.60
+
+7. Peak vs Off-Peak Utilization:
+   - Off-Peak: 92.9% of trips
+   - Peak: 7.1% of trips

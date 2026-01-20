@@ -1,0 +1,252 @@
+Task 
+
+Intelligent Urban Mobility Analytics & GenAI Insights Platform 
+
+Shape 
+
+Goal 
+
+Build an end-to-end analytics and GenAI system on real-world urban transportation data that performs scalable data cleaning, KPI computation, SQL analytics, PySpark ETL, GenAI-powered insights, and cloud-based API deployment. 
+
+ 
+
+Problem Statement 
+
+City planners and transportation companies need scalable insights into trip demand, congestion, revenue patterns, and rider behavior. This project converts raw trip data into actionable KPIs and conversational intelligence. 
+
+ 
+
+Tech Stack 
+
+Python, Pandas, NumPy, SQL, PySpark, Matplotlib/Seaborn, OpenAI/Gemini API, LangChain, AWS/Azure (Serverless) 
+
+ 
+
+Dataset (Open Source, Large Scale) 
+
+Primary Dataset (Recommended) 
+
+Kaggle – NYC Taxi Trips 
+https://www.kaggle.com/datasets/elemento/nyc-yellow-taxi-trip-data 
+
+ 
+
+End-to-End Task Breakdown: 
+
+1. Data Ingestion & Cleaning (Python + OOP) 
+
+Objective: Prepare raw trip data for analytics. 
+
+Tasks 
+
+Load raw taxi trip CSVs 
+
+Handle: 
+
+Missing passenger counts 
+
+Zero or negative trip distances 
+
+Invalid timestamps 
+
+Convert: 
+
+Pickup & dropoff times → datetime 
+
+Fare, tip, total amount → numeric 
+
+Feature engineering: 
+
+Hour of day 
+
+Day of week 
+
+Month, Quarter 
+
+Apply OOP: 
+
+MobilityDataAnalyzer class: 
+
+load_data() 
+
+clean_data() 
+
+feature_engineering() 
+
+export_clean_data() 
+
+ 
+
+2. KPI Computation & Exploratory Analysis 
+
+Core KPIs 
+
+Total & Monthly Trip Revenue 
+
+Average Trip Distance 
+
+Average Fare per Trip 
+
+Tip Percentage 
+
+Trips per Hour (Demand Pattern) 
+
+Revenue per Mile 
+
+Peak vs Off-Peak Utilization 
+
+Visualizations 
+
+Monthly revenue trends 
+
+Hourly demand heatmap 
+
+Fare & distance outliers 
+
+Tip distribution by time of day 
+
+ 
+
+3. Analytical SQL Layer (NO Schema Design) 
+
+Objective: Business-focused SQL analytics. 
+
+Tasks 
+
+Load cleaned data into SQLite / PostgreSQL 
+
+Write analytical SQL queries: 
+
+Peak demand hours using GROUP BY 
+
+Revenue by pickup zone 
+
+Top 10 highest-revenue days 
+
+Average fare by weekday 
+
+Monthly growth using window functions 
+
+Export query results for reporting 
+
+ 
+
+4. Scalable ETL with PySpark 
+
+Objective: Handle large-scale trip data efficiently. 
+
+Tasks 
+
+Read multiple months of taxi data using Spark 
+
+Clean and transform data at scale 
+
+Compute KPIs: 
+
+Monthly revenue 
+
+Demand by zone 
+
+Peak-hour congestion indicators 
+
+High-value trip segments 
+
+Write outputs to Parquet 
+
+Capture Spark DAG and explain performance benefits 
+
+ 
+
+5. GenAI Urban Mobility Insights Assistant 
+
+Objective: Enable natural-language analytics for decision-makers. 
+
+Capabilities 
+
+Ask questions like: 
+
+“What were the busiest pickup zones last month?” 
+
+“When is surge demand highest?” 
+
+“Why did revenue drop in February?” 
+
+Generate: 
+
+Monthly executive summaries 
+
+Trend explanations 
+
+Tech 
+
+OpenAI / Gemini API 
+
+LangChain for prompt orchestration 
+
+Prompt templates for consistent KPI reasoning 
+
+ 
+Scalability Strategy (100GB+) 
+
+Storage: S3 / ADLS (Parquet) 
+
+Processing: Spark / Databricks 
+
+Indexing: Vector DB (FAISS / Pinecone) 
+
+Retrieval: RAG over aggregated mobility metrics 
+
+ 
+
+6. Cloud Deployment: Serverless Mobility Analytics API (Optional) 
+
+Objective: Expose analytics via cloud APIs. 
+
+Tasks 
+
+Store aggregated KPIs in S3 / Azure Blob 
+
+Deploy: 
+
+AWS Lambda or Azure Function 
+
+API Endpoints: 
+
+/monthly-revenue 
+
+/peak-hours 
+
+/top-zones 
+
+Scheduled execution (daily/monthly) 
+
+Enable logging & monitoring 
+
+ 
+
+Final Deliverables: 
+
+GitHub Public link with 
+
+Code 
+
+Cleaned taxi trip dataset 
+
+Python OOP analytics notebook/script 
+
+KPI visualizations 
+
+SQL query file + results 
+
+PySpark ETL pipeline 
+
+GenAI assistant (script/UI) 
+
+Architecture & scalability diagram 
+
+Execution screenshots 
+
+Deployed cloud API (Optional) 
+
+ 
+
